@@ -11,7 +11,11 @@ sudo snap install lxd
 Initialize LXD and accept defaults (or customize as needed):
 
 ```bash
-sudo lxd init
+sudo apt update
+sudo apt install -y zfsutils-linux
+sudo modprobe zfs
+ls -l /dev/zfs        # should exist now
+sudo lxd init         # run it again
 ```
 
 Allow your user to run `lxc` commands without `sudo`:
@@ -21,11 +25,20 @@ getent group lxd | grep -qwF "$USER" || sudo usermod -aG lxd "$USER"
 newgrp lxd
 ```
 
-Verify:
-
 ```bash
 lxc version
 ```
+
+1. Enable the HTTPS listener
+
+```
+lxc config set core.https_address :8443
+hostname -I                                # shows your server's IP
+```
+
+https://localhost:8443
+
+
 
 ## Common Operations (Examples)
 
