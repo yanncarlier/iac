@@ -1,15 +1,24 @@
 
 
 ```
-Hardware CPU virtualization
-        └── KVM
-              ├── QEMU              → general VMs / QEMU microvm
-              ├── Firecracker       → minimal microVMs
-              ├── Kata Containers   → container API + a chosen VMM
-              │     ├── QEMU
-              │     ├── Cloud Hypervisor
-              │     └── Firecracker
-              └── Unikraft          → unikernels (single-address-space libOS), driven by kraft
+Hardware virtualization (VT-x / AMD-V)
+        └── KVM (kernel hypervisor)
+              ├── VMMs (userspace)
+              │     ├── QEMU (general VMs, plus microvm machine type)
+              │     ├── Firecracker (minimal microVMs)
+              │     └── Cloud Hypervisor (modern, minimal VMM)
+              │
+              └── (consumed by)
+
+Orchestration layer
+  └── Kata Containers → container runtime API (OCI/CRI) that launches
+                        a VM per pod using QEMU, Cloud Hypervisor,
+                        Firecracker, or Dragonball
+
+Guest layer (what runs inside the VM)
+  ├── Regular Linux guest (typical for Kata, QEMU, Firecracker)
+  └── Unikraft unikernel → built/run with kraft, typically on
+                           QEMU or Firecracker over KVM
 ```
 
 
