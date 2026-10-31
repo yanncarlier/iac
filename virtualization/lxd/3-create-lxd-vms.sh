@@ -2,7 +2,7 @@
 
 set -e
 
-os=ubuntu-minimal:24.04
+os=ubuntu-minimal:26.04
 
 vms=(
   "VM01"

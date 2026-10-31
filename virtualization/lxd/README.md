@@ -38,15 +38,20 @@ hostname -I                                # shows your server's IP
 
 https://localhost:8443
 
-
-
 ## Common Operations (Examples)
 
 Launch a container and a VM:
 
 ```bash
+lxc launch ubuntu:26.04 u2604
+
 lxc launch ubuntu:24.04 u2404
 lxc launch ubuntu:24.04 u2404-vm --vm
+
+
+sudo ufw status verbose
+lxc exec u2604 -- resolvectl status
+lxc exec u2604 -- ping -c1 1.1.1.1      # works? then only DNS is broken
 ```
 
 List instances and show details:
